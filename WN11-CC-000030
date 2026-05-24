@@ -1,0 +1,48 @@
+<#
+.SYNOPSIS
+    This PowerShell script prevent Internet Control Message Protocol (ICMP) redirects from overriding Open Shortest Path First (OSPF) generated routes.
+
+.NOTES
+    Author          : Stephen Martinez
+    LinkedIn        : www.linkedin.com/in/stephen-martinez20/
+    GitHub          : github.com/stephenmartinez20
+    Date Created    : 2026-05-24
+    Last Modified   : 2026-05-24
+    Version         : 5.1
+    CVEs            : N/A
+    Plugin IDs      : N/A
+    STIG-ID         : WN11-CC-000030
+    Documentation   : https://stigaview.com/products/win11/v2r7/WN11-CC-000030/
+
+.TESTED ON
+    Date(s) Tested  : 
+    Tested By       : 
+    Systems Tested  : 
+    PowerShell Ver. : 
+
+.USAGE
+    Put any usage instructions here.
+    Example syntax:
+    PS C:\> .\STIG-ID-WN11-CC-000030.ps1 
+#>
+
+# Run PowerShell as Administrator
+
+$registryPath = "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters"
+$valueName   = "EnableICMPRedirect"
+$valueData   = 0
+
+# Create the registry path if it does not exist
+if (-not (Test-Path $registryPath)) {
+    New-Item -Path $registryPath -Force | Out-Null
+}
+
+# Create or update the DWORD registry value
+New-ItemProperty `
+    -Path $registryPath `
+    -Name $valueName `
+    -Value $valueData `
+    -PropertyType DWord `
+    -Force | Out-Null
+
+Write-Host "EnableICMPRedirect has been set to 0 successfully."
