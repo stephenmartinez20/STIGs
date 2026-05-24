@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    This PowerShell script ensures the Secondary Logon service is disabled on Windows 11.
+    This PowerShell script restricts Anonymous enumeration of shared resources.
 
 .NOTES
     Author          : Stephen Martinez
