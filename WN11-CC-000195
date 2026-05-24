@@ -1,0 +1,48 @@
+<#
+.SYNOPSIS
+    This PowerShell script enabled enhanced anti-spoofing for facial recognition on Windows 11.
+
+.NOTES
+    Author          : Stephen Martinez
+    LinkedIn        : www.linkedin.com/in/stephen-martinez20/
+    GitHub          : github.com/stephenmartinez20
+    Date Created    : 2026-05-24
+    Last Modified   : 2026-05-24
+    Version         : 5.1
+    CVEs            : N/A
+    Plugin IDs      : N/A
+    STIG-ID         : WN11-CC-000195
+    Documentation   : https://stigaview.com/products/win11/v2r7/WN11-CC-000195/
+
+.TESTED ON
+    Date(s) Tested  : 
+    Tested By       : 
+    Systems Tested  : 
+    PowerShell Ver. : 
+
+.USAGE
+    Put any usage instructions here.
+    Example syntax:
+    PS C:\> .\STIG-ID-WN11-CC-000195.ps1 
+#>
+
+# Run PowerShell as Administrator
+
+$registryPath = "HKLM:\SYSTEM\CurrentControlSet\Control\LSA\pku2u"
+$valueName    = "AllowOnlineID"
+$valueData    = 0
+
+# Create the registry path if it does not exist
+if (-not (Test-Path $registryPath)) {
+    New-Item -Path $registryPath -Force | Out-Null
+}
+
+# Create or update the DWORD registry value
+New-ItemProperty `
+    -Path $registryPath `
+    -Name $valueName `
+    -Value $valueData `
+    -PropertyType DWord `
+    -Force | Out-Null
+
+Write-Host "AllowOnlineID has been set to 0 successfully."
