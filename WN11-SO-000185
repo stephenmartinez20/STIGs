@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    This PowerShell script ensures the Secondary Logon service is disabled on Windows 11.
+    This PowerShell script  prevents online identities from authenticating to domain-joined systems.
 
 .NOTES
     Author          : Stephen Martinez
