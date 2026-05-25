@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    This PowerShell script prevents enumeration of administrator accounts during elevation. 
+    This PowerShell script ensures passwords are not saving in the Remote Desktop Client. 
 
 .NOTES
     Author          : Stephen Martinez
