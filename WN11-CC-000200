@@ -1,0 +1,48 @@
+<#
+.SYNOPSIS
+    This PowerShell script prevents enumeration of administrator accounts during elevation. 
+
+.NOTES
+    Author          : Stephen Martinez
+    LinkedIn        : www.linkedin.com/in/stephen-martinez20/
+    GitHub          : github.com/stephenmartinez20
+    Date Created    : 2026-05-25
+    Last Modified   : 2026-05-25
+    Version         : 5.1
+    CVEs            : N/A
+    Plugin IDs      : N/A
+    STIG-ID         : WN11-CC-000200
+    Documentation   : https://stigaview.com/products/win11/v2r7/WN11-CC-000200/
+
+.TESTED ON
+    Date(s) Tested  : 
+    Tested By       : 
+    Systems Tested  : 
+    PowerShell Ver. : 
+
+.USAGE
+    Put any usage instructions here.
+    Example syntax:
+    PS C:\> .\STIG-ID-WN11-CC-000200.ps1 
+#>
+
+# Run PowerShell as Administrator
+
+$registryPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\CredUI"
+$valueName    = "EnumerateAdministrators"
+$valueData    = 0
+
+# Create the registry path if it does not exist
+if (-not (Test-Path $registryPath)) {
+    New-Item -Path $registryPath -Force | Out-Null
+}
+
+# Create or update the DWORD registry value
+New-ItemProperty `
+    -Path $registryPath `
+    -Name $valueName `
+    -Value $valueData `
+    -PropertyType DWord `
+    -Force | Out-Null
+
+Write-Host "EnumerateAdministrators has been set to 0 successfully."
